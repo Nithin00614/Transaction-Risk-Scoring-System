@@ -49,30 +49,53 @@ The model outputs a risk probability, which is converted into business decisions
 
 ## Project Structure
 
-transaction-risk-ml/
+This project follows modular MLOps-inspired structure seprating training, inferenece, and deployment components.
+
+Transaction-Risk-Scoring-System/
 │
-├── data/
-├── training/            # Training pipeline
-├── inference/           # API & inference logic
-├── models/              # Model artifacts
-├── system_design.md     # Architecture documentation
-├── requirements.txt
-├── Dockerfile
+├── data/                      # Raw / synthetic datasets
+│
+├── training/                  # Training pipeline
+│   ├── train.py
+│   └── preprocess.py
+│
+├── inference/                 # API & inference logic
+│   ├── app.py
+│   └── predict.py
+│
+├── models/                    # Saved model artifacts
+│   └── model.pkl
+│
+├── utils/                     # Utility modules
+│   ├── logger.py
+│   └── __init__.py
+│
+├── tests/                     # Unit tests
+│   └── test_api.py
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # CI/CD pipeline
+│
+├── .flake8                    # Linting config
+├── requirements.txt           # Dependencies
+├── Dockerfile                 # Containerization
+├── system_design.md           # Architecture design
 └── README.md
 
 ---
 
 ## Running the Project
 
-Install dependencies
+1. Install dependencies
 
 pip install -r requirements.txt
 
-Train model
+2. Train model
 
 python training/train.py
 
-Run inference API
+3. Run inference API
 
 uvicorn inference.app:app --reload
 
