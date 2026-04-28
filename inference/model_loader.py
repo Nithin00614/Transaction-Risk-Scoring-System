@@ -1,5 +1,6 @@
-import joblib
 import warnings
+
+import joblib
 
 MODEL_PATH = "models/logreg_v1.pkl"
 
@@ -11,7 +12,7 @@ FEATURE_NAMES = [
     "account_age_days",
     "past_txn_count_24h",
     "hour_of_day",
-    "merchant_risk_score"
+    "merchant_risk_score",
 ]
 
 

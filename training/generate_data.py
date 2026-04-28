@@ -15,13 +15,15 @@ past_txn_count_24h = np.random.poisson(3, size=N)
 hour_of_day = np.random.randint(0, 24, size=N)
 merchant_risk_score = np.random.uniform(0, 1, size=N)
 
-df = pd.DataFrame({
-    "amount": amount,
-    "account_age_days": account_age_days,
-    "past_txn_count_24h": past_txn_count_24h,
-    "hour_of_day": hour_of_day,
-    "merchant_risk_score": merchant_risk_score
-})
+df = pd.DataFrame(
+    {
+        "amount": amount,
+        "account_age_days": account_age_days,
+        "past_txn_count_24h": past_txn_count_24h,
+        "hour_of_day": hour_of_day,
+        "merchant_risk_score": merchant_risk_score,
+    }
+)
 
 # -------------------------------
 # 2. Feature Engineering
@@ -44,14 +46,14 @@ high_txn_flag = (past_txn_count_24h > 10).astype(int)
 # -------------------------------
 
 fraud_score = (
-    1.2 * amount_norm +
-    0.8 * txn_norm +
-    1.5 * merchant_risk_score +
-    0.7 * night_risk +
-    0.7 * new_account_risk +
-    0.8 * high_amount_flag +
-    0.8 * high_txn_flag +
-    np.random.normal(0, 0.15, size=N)   # noise
+    1.2 * amount_norm
+    + 0.8 * txn_norm
+    + 1.5 * merchant_risk_score
+    + 0.7 * night_risk
+    + 0.7 * new_account_risk
+    + 0.8 * high_amount_flag
+    + 0.8 * high_txn_flag
+    + np.random.normal(0, 0.15, size=N)  # noise
 )
 
 # -------------------------------
