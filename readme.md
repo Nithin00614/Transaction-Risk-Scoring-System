@@ -53,22 +53,24 @@ This project follows modular MLOps-inspired structure seprating training, infere
 
 ## Project Structure
 
-Transaction-Risk-Scoring-System/
-│
-├── data/                 
-├── training/               # Training pipeline
-├── inference/              # API
-├── models/                 
-├── utils/                  # Utility modules
-├── tests/                  # Unit tests
-├── .github/
-│   └── workflows/          # CI/CD
-│
-├── requirements.txt
-├── Dockerfile              # Conatinerization
-├── system_design.md        # Architecture & Decisions
-└── README.md
+## Project Structure
 
+```
+Transaction-Risk-Scoring-System/
+├── data/
+├── training/
+├── inference/
+├── models/
+├── utils/
+├── tests/
+├── .github/
+│   └── workflows/
+|
+├── requirements.txt
+├── Dockerfile
+├── system_design.md
+└── README.md
+```
 ---
 
 ## Running the Project
