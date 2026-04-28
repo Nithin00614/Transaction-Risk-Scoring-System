@@ -1,5 +1,6 @@
-import json
+import os
 import logging
+import json
 from datetime import datetime
 
 
@@ -11,6 +12,7 @@ class JsonFormatter(logging.Formatter):
             "message": record.getMessage(),
         }
 
+        # Include extra fields if present
         if hasattr(record, "extra_data"):
             log_record.update(record.extra_data)
 
@@ -21,15 +23,22 @@ def get_logger(name="app"):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
 
-    # Prevent duplicate logs
+    #  Prevent duplicate handlers
     if logger.handlers:
         return logger
 
-    file_handler = logging.FileHandler("logs/app.jsonl")
-    file_handler.setFormatter(JsonFormatter())
+    #  Create logs directory (CRITICAL FIX)
+    os.makedirs("logs", exist_ok=True)
 
+    formatter = JsonFormatter()
+
+    # File handler
+    file_handler = logging.FileHandler("logs/app.json")
+    file_handler.setFormatter(formatter)
+
+    # Console handler (for CI visibility)
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(JsonFormatter())
+    console_handler.setFormatter(formatter)
 
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
