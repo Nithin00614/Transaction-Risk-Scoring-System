@@ -1,17 +1,11 @@
-[![CI](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions/workflows/ci.yml/badge.svg)](https://github.com/Nithin00614/Transaction-Risk-Scoring-System)
+[![CI Pipeline](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions/workflows/ci.yml/badge.svg)](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
-
 ![API](https://img.shields.io/badge/API-FastAPI-green)
-
-![Latency](https://img.shields.io/badge/Latency-sub--150ms-brightgreen)
-
+![Latency](https://img.shields.io/badge/Latency-<150ms-brightgreen)
 ![Throughput](https://img.shields.io/badge/Throughput-160RPS-blue)
-
 ![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
-
-![Render](https://img.shields.io/badge/Deployed-Render-purple)
-
+![Deploy](https://img.shields.io/badge/Deployed-Render-purple)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 
