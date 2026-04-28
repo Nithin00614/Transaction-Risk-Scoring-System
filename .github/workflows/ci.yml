@@ -23,7 +23,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      #  LINTING STEP (ADD HERE)
+      #  LINTING STEP 
       - name: Lint Code
         run: |
           pip install flake8
@@ -32,12 +32,14 @@ jobs:
       #  TESTING
       - name: Run Tests
         run: |
+          pip install -r requirements.txt
           pip install pytest
+          export PYTHONPATH=$PYTHONPATH:.
           pytest
 
       - name: Check App Import
         run: |
-          python -c "import inference.app"
+          python -c "from inference.app import app"
 
       - name: Build Docker Image
         run: |
