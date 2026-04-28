@@ -1,10 +1,23 @@
-![CI](https://github.com/Nithin00614/transaction-risk-ml/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions/workflows/ci.yml/badge.svg)](https://github.com/Nithin00614/Transaction-Risk-Scoring-System)
+
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+
+![API](https://img.shields.io/badge/API-FastAPI-green)
+
+![Latency](https://img.shields.io/badge/Latency-sub--150ms-brightgreen)
+
+![Throughput](https://img.shields.io/badge/Throughput-160RPS-blue)
+
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+
+![Render](https://img.shields.io/badge/Deployed-Render-purple)
+
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 
 ### Transaction Risk ML – Real-Time Risk Scoring System
 
-Overview
+## Overview
 
 This project implements a real-time transaction risk scoring system using machine learning.
 
@@ -18,7 +31,7 @@ The system follows a production-style ML workflow with clearly separated trainin
 
 ---
 
-Key Features
+## Key Features
 
 - End-to-end ML pipeline (training → inference)
 - Real-time inference using FastAPI
@@ -29,7 +42,7 @@ Key Features
 
 ---
 
-Model Summary
+## Model Summary
 
 - Model: Logistic Regression
 - Preprocessing: StandardScaler
@@ -40,7 +53,7 @@ The model outputs a risk probability, which is converted into business decisions
 
 ---
 
-Project Structure
+## Project Structure
 
 transaction-risk-ml/
 │
@@ -55,7 +68,7 @@ transaction-risk-ml/
 
 ---
 
-Running the Project
+## Running the Project
 
 Install dependencies
 
@@ -75,7 +88,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-🌐 Live API
+## 🌐 Live API
 
 The model is deployed and accessible via a public API.
 
@@ -108,7 +121,7 @@ Example Response
 
 ---
 
-⚡ Performance & Load Testing
+## ⚡ Performance & Load Testing
 
 The system was evaluated under simulated load to validate real-time performance.
 
@@ -121,7 +134,7 @@ These results demonstrate the system’s ability to handle high-throughput, low-
 
 ---
 
-Deployment
+## Deployment
 
 docker build -t <username>/transaction-risk-ml .
 docker run -p 10000:10000 <username>/transaction-risk-ml
@@ -130,7 +143,7 @@ The API is deployed on Render with logs streamed via stdout and monitored throug
 
 ---
 
-Dataset
+## Dataset
 
 The dataset used for training is synthetic and not included in this repository.
 
@@ -142,7 +155,7 @@ It simulates real-world fraud scenarios using:
 
 ---
 
-Model Performance
+## Model Performance
 
 - Model: Logistic Regression
 - ROC-AUC Score: ~0.93
@@ -150,7 +163,7 @@ Model Performance
 
 ---
 
-Documentation
+## Documentation
 
 For detailed architecture, design decisions, and trade-offs:
 
