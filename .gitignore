@@ -88,3 +88,7 @@ docker-compose.local.yml
 docker-compose.streamlit.yml
 docker-compose.prod.yml
 docker-compose.yml
+
+*.log
+locust_results/
+logs/

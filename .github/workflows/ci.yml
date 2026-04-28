@@ -23,6 +23,18 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      #  LINTING STEP (ADD HERE)
+      - name: Lint Code
+        run: |
+          pip install flake8
+          flake8 .
+
+      #  TESTING
+      - name: Run Tests
+        run: |
+          pip install pytest
+          pytest
+
       - name: Check App Import
         run: |
           python -c "import inference.app"
@@ -36,7 +48,7 @@ jobs:
           docker run -d -p 8000:8000 transaction-risk-ml
           sleep 10
 
-      #  CD STEP
+      #  CD
       - name: Trigger Render Deploy
         if: success() && github.ref == 'refs/heads/main'
         run: |

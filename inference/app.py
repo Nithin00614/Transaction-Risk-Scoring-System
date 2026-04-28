@@ -1,11 +1,29 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from utils.logger import get_logger
+import logging
+import json
+import time
+import warnings
+from cachetools import TTLCache
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import asyncio
 import warnings
 
 from inference.schemas import TransactionRequest, RiskResponse
 from inference.model_loader import load_model, FEATURE_NAMES
+
+# -----------------------
+# Setup Logging
+# -----------------------
+
+logger = get_logger()
+
+# -----------------------
+# Setup Cache (5 min TTL)
+# -----------------------
+cache = TTLCache(maxsize=1000, ttl=300)
 
 app = FastAPI(
     title="Transaction Risk Assessment API",
@@ -49,35 +67,100 @@ def get_metadata():
 
 
 @app.post("/score", response_model=RiskResponse)
-def score_transaction(req: TransactionRequest):
-    """Score a transaction for fraud risk"""
-    # Create DataFrame with proper feature names and order
-    features = pd.DataFrame([{
-        "amount": req.amount,
-        "account_age_days": req.account_age_days,
-        "past_txn_count_24h": req.past_txn_count_24h,
-        "hour_of_day": req.hour_of_day,
-        "merchant_risk_score": req.merchant_risk_score
-    }])
-    
-    # Ensure column order matches training
-    features = features[FEATURE_NAMES]
-    
-    # Suppress feature name warnings during prediction
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=UserWarning)
-        risk_score = model.predict_proba(features)[0][1]
+async def score_transaction(req: TransactionRequest):
+    start_time = time.time()
 
-    # Convert probability to business decision using thresholds
-    if risk_score < 0.25:
-        decision = "allow"
-    elif risk_score < 0.6:
-        decision = "challenge"
-    else:
-        decision = "block"
+    try:
+        # -----------------------
+        # Create cache key
+        # -----------------------
+        key = json.dumps(req.dict(), sort_keys=True)
 
-    return RiskResponse(
-        risk_score=float(risk_score),
-        decision=decision,
-        model_version="logreg_v1"
-    )
+        # -----------------------
+        # Check cache
+        # -----------------------
+        if key in cache:
+            logger.info("Cache HIT")
+            return RiskResponse(
+                risk_score=float(cache[key]["risk_score"]),
+                decision=cache[key]["decision"],
+                model_version="logreg_v1"
+            )
+
+        logger.info("Cache MISS")
+
+        # -----------------------
+        # Prepare features
+        # -----------------------
+        features = pd.DataFrame([{
+            "amount": req.amount,
+            "account_age_days": req.account_age_days,
+            "past_txn_count_24h": req.past_txn_count_24h,
+            "hour_of_day": req.hour_of_day,
+            "merchant_risk_score": req.merchant_risk_score
+        }])
+
+        features = features[FEATURE_NAMES]
+
+        # -----------------------
+        # Async model inference
+        # -----------------------
+        loop = asyncio.get_running_loop()
+
+        def predict():
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=UserWarning)
+                return model.predict_proba(features)[0][1]
+
+        risk_score = await loop.run_in_executor(None, predict)
+
+        # -----------------------
+        # Business logic
+        # -----------------------
+        if risk_score < 0.25:
+            decision = "allow"
+        elif risk_score < 0.6:
+            decision = "challenge"
+        else:
+            decision = "block"
+
+        # -----------------------
+        # Store in cache
+        # -----------------------
+        cache[key] = {
+            "risk_score": float(risk_score),
+            "decision": decision
+        }
+
+        # -----------------------
+        # Logging
+        # -----------------------
+        latency = round((time.time() - start_time) * 1000, 2)
+        logger.info(
+            "request_processed",
+            extra={
+                "extra_data": {
+                    "risk_score": float(risk_score),
+                    "decision": decision,
+                    "latency_ms": latency,
+                    "model_version": "logreg_v1",
+                    "input_amount": req.amount  # 
+                }
+            }
+        )
+
+        # -----------------------
+        # Response
+        # -----------------------
+        return RiskResponse(
+            risk_score=float(risk_score),
+            decision=decision,
+            model_version="logreg_v1"
+        )
+
+    except Exception as e:
+        logger.error(
+            "error_occurred",
+            extra={"extra_data": {"error": str(e)}}
+        )
+        raise HTTPException(status_code=500, detail=str(e))
