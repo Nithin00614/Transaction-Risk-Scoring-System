@@ -51,36 +51,22 @@ The model outputs a risk probability, which is converted into business decisions
 
 This project follows modular MLOps-inspired structure seprating training, inferenece, and deployment components.
 
+## Project Structure
+
 Transaction-Risk-Scoring-System/
 │
-├── data/                      # Raw / synthetic datasets
-│
-├── training/                  # Training pipeline
-│   ├── train.py
-│   └── preprocess.py
-│
-├── inference/                 # API & inference logic
-│   ├── app.py
-│   └── predict.py
-│
-├── models/                    # Saved model artifacts
-│   └── model.pkl
-│
-├── utils/                     # Utility modules
-│   ├── logger.py
-│   └── __init__.py
-│
-├── tests/                     # Unit tests
-│   └── test_api.py
-│
+├── data/                 
+├── training/               # Training pipeline
+├── inference/              # API
+├── models/                 
+├── utils/                  # Utility modules
+├── tests/                  # Unit tests
 ├── .github/
-│   └── workflows/
-│       └── ci.yml             # CI/CD pipeline
+│   └── workflows/          # CI/CD
 │
-├── .flake8                    # Linting config
-├── requirements.txt           # Dependencies
-├── Dockerfile                 # Containerization
-├── system_design.md           # Architecture design
+├── requirements.txt
+├── Dockerfile              # Conatinerization
+├── system_design.md        # Architecture & Decisions
 └── README.md
 
 ---
