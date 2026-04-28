@@ -51,10 +51,6 @@ The model outputs a risk probability, which is converted into business decisions
 
 This project follows modular MLOps-inspired structure seprating training, inferenece, and deployment components.
 
-## Project Structure
-
-## Project Structure
-
 ```
 Transaction-Risk-Scoring-System/
 ├── data/
