@@ -18,29 +18,28 @@ class JsonFormatter(logging.Formatter):
 
         return json.dumps(log_record)
 
+    def get_logger(name="app"):
+        logger = logging.getLogger(name)
+        logger.setLevel(logging.INFO)
 
-def get_logger(name="app"):
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+        #  Prevent duplicate handlers
+        if logger.handlers:
+            return logger
 
-    #  Prevent duplicate handlers
-    if logger.handlers:
+        #  Create logs directory (CRITICAL FIX)
+        os.makedirs("logs", exist_ok=True)
+
+        formatter = JsonFormatter()
+
+        # File handler
+        file_handler = logging.FileHandler("logs/app.json")
+        file_handler.setFormatter(formatter)
+
+        # Console handler (for CI visibility)
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+
         return logger
-
-    #  Create logs directory (CRITICAL FIX)
-    os.makedirs("logs", exist_ok=True)
-
-    formatter = JsonFormatter()
-
-    # File handler
-    file_handler = logging.FileHandler("logs/app.json")
-    file_handler.setFormatter(formatter)
-
-    # Console handler (for CI visibility)
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-
-    logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
-
-    return logger
