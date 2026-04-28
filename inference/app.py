@@ -30,6 +30,10 @@ app = FastAPI(
 )
 model = load_model()
 
+@app.get("/")
+def root():
+    return {"message": "API is running"}
+
 
 @app.get("/health")
 def health_check():
