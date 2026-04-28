@@ -1,46 +1,47 @@
+![CI](https://github.com/Nithin00614/transaction-risk-ml/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+### Transaction Risk ML – Real-Time Risk Scoring System
+
+Overview
+
+This project implements a real-time transaction risk scoring system using machine learning.
+
+It predicts the fraud risk probability of a transaction and maps it into actionable decisions:
+
+- ALLOW → Low risk
+- CHALLENGE → Medium risk
+- BLOCK → High risk
+
+The system follows a production-style ML workflow with clearly separated training and inference pipelines.
 
 ---
-# Transaction Risk ML – Real-Time Risk Scoring System
 
-## Overview
-
-This project implements a **real-time transaction risk scoring system** using machine learning.
-
-It predicts the **fraud risk probability** of a transaction and maps it into actionable decisions:
-
-- **ALLOW** → Low risk  
-- **CHALLENGE** → Medium risk  
-- **BLOCK** → High risk  
-
-The system demonstrates a **production-style ML workflow** with separate training and inference pipelines.
-
----
-
-## Key Features
+Key Features
 
 - End-to-end ML pipeline (training → inference)
-- Logistic Regression baseline model
 - Real-time inference using FastAPI
-- Dockerized for deployment
-- Clean separation between training and serving
+- CI/CD integration with automated testing
+- Dockerized deployment
+- Structured logging (captured via cloud platform)
 - Scenario-based validation for risk decisions
 
 ---
 
-## Model Summary
+Model Summary
 
-- Model: Logistic Regression  
-- Preprocessing: StandardScaler  
-- Training Data: Synthetic dataset with realistic fraud patterns  
-- ROC-AUC: ~0.93  
+- Model: Logistic Regression
+- Preprocessing: StandardScaler
+- Training Data: Synthetic dataset with realistic fraud patterns
+- ROC-AUC: ~0.93
 
-The model outputs a **risk probability**, which is converted into business decisions using thresholding.
+The model outputs a risk probability, which is converted into business decisions using thresholding.
 
 ---
 
-## Project Structure
+Project Structure
 
-```
 transaction-risk-ml/
 │
 ├── data/
@@ -51,53 +52,43 @@ transaction-risk-ml/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
-```
 
 ---
 
-## Running the Project
+Running the Project
 
-### Install dependencies
+Install dependencies
 
-```bash
 pip install -r requirements.txt
-```
 
-### Train model
+Train model
 
-```bash
 python training/train.py
-```
 
-### Run inference API
+Run inference API
 
-```bash
 uvicorn inference.app:app --reload
-```
 
 API:
 
-```
 http://127.0.0.1:8000/docs
-```
+
 ---
-## 🌐 Live API
+
+🌐 Live API
 
 The model is deployed and accessible via a public API.
 
-**Base URL:**
-https://transaction-risk-ml-production-system.onrender.com
+- Base URL
+  https://transaction-risk-ml-production-system.onrender.com
 
-**Interactive Docs (Swagger UI):**
-https://transaction-risk-ml-production-system.onrender.com/docs
-
-You can test the API directly from the Swagger interface without any setup.
+- Swagger UI
+  https://transaction-risk-ml-production-system.onrender.com/docs
 
 ---
 
-## Example Request
+Example Request
 
-json
 {
   "amount": 2500,
   "account_age_days": 180,
@@ -107,6 +98,7 @@ json
 }
 
 ---
+
 Example Response
 
 {
@@ -116,44 +108,53 @@ Example Response
 
 ---
 
-## Deployment
+⚡ Performance & Load Testing
 
-```bash
-docker build -t <username>/transaction-risk-ml .
-docker run -p 10000:10000 <username>/transaction-risk-ml
-```
+The system was evaluated under simulated load to validate real-time performance.
+
+- Tool Used: Locust
+- Throughput: ~160 requests/second
+- Latency: <150 ms (average)
+- Failure Rate: 0% under sustained load
+
+These results demonstrate the system’s ability to handle high-throughput, low-latency inference workloads.
 
 ---
 
-## Dataset
+Deployment
+
+docker build -t <username>/transaction-risk-ml .
+docker run -p 10000:10000 <username>/transaction-risk-ml
+
+The API is deployed on Render with logs streamed via stdout and monitored through the platform dashboard.
+
+---
+
+Dataset
 
 The dataset used for training is synthetic and not included in this repository.
 
-It was designed to simulate realistic fraud scenarios using:
+It simulates real-world fraud scenarios using:
 
-Transaction behavior
-
-Account characteristics
-
-Merchant risk signals
+- Transaction behavior
+- Account characteristics
+- Merchant risk signals
 
 ---
-## Model Performance
 
-The model is evaluated using ROC-AUC on a validation split.
+Model Performance
 
-- **Model**: Logistic Regression
-- **ROC-AUC Score**: ~0.93
-- **Pipeline**: StandardScaler + Logistic Regression
+- Model: Logistic Regression
+- ROC-AUC Score: ~0.93
+- Pipeline: StandardScaler + Logistic Regression
 
-Note: The dataset is synthetically generated with controlled noise to simulate real-world variability and avoid feature dominance.
 ---
 
-## Documentation
+Documentation
 
-Detailed system architecture, design decisions, and trade-offs are available in:
+For detailed architecture, design decisions, and trade-offs:
 
-**Detailed System Design**  
+➡️ *Detailed System Design*  
   → [Open](system_design.md)
 
 ---
