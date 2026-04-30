@@ -1,3 +1,5 @@
+###  Transaction Risk ML – Real-Time Risk Scoring System
+
 [![CI Pipeline](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions/workflows/ci.yml/badge.svg)](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
@@ -9,9 +11,8 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 
-### Transaction Risk ML – Real-Time Risk Scoring System
 
-## Overview
+## 📌 Overview
 
 This project implements a real-time transaction risk scoring system using machine learning.
 
