@@ -151,7 +151,7 @@ The dataset used for training is synthetic and not included in this repository.
 
 It simulates real-world fraud scenarios using:
 
-- Transaction behavior
+- Transaction Behavior
 - Account characteristics
 - Merchant risk signals
 
