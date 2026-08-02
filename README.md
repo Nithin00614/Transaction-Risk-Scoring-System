@@ -1,4 +1,4 @@
-###  Transaction Risk ML – Real-Time Risk Scoring System
+###  Transaction Risk ML – Real Time Risk Scoring System
 
 [![CI Pipeline](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions/workflows/ci.yml/badge.svg)](https://github.com/Nithin00614/Transaction-Risk-Scoring-System/actions)
 
@@ -128,7 +128,7 @@ Example Response
 The system was evaluated under simulated load to validate real-time performance.
 
 - Tool Used: Locust
-- Throughput: ~160 requests/second
+- Throughput: 160 requests/second
 - Latency: <150 ms (average)
 - Failure Rate: 0% under sustained load
 
@@ -160,14 +160,14 @@ It simulates real-world fraud scenarios using:
 ## Model Performance
 
 - Model: Logistic Regression
-- ROC-AUC Score: ~0.93
+- ROC-AUC Score: 0.93
 - Pipeline: StandardScaler + Logistic Regression
 
 ---
 
 ## Documentation
 
-For detailed architecture, design decisions, and trade-offs:
+For detailed architecture, design decisions and trade-offs:
 
 ➡️ *Detailed System Design*  
   → [Open](system_design.md)
